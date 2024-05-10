@@ -1,0 +1,342 @@
+﻿@using WebBanHang.Models.ViewModel
+@model IEnumerable<CartItem>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- link font chữ -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;600;700&display=swap">
+<!-- link icon -->
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
+<link rel='stylesheet'
+      href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- link css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link rel="stylesheet" href="~/css/pay.css">
+<style>
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    /* Mobile & tablet  */
+    @@media (max-width: 1023px) {
+        .summary {
+            display: block;
+        }
+    }
+
+    /* tablet */
+    @@media (min-width: 740px) and (max-width: 1023px) {
+    }
+
+    /* mobile */
+    @@media (max-width: 739px) {
+    }
+</style>
+@{
+    double totalPriceOrder = Model.Sum(t => t.TotalPrice);
+    double priceShip = (Model.Sum(t => t.TotalPrice) > 500000 ? 0 : 25000);
+    double totalPrice = totalPriceOrder + priceShip;
+}
+<div class="content">
+    <div class="wrap">
+        <div class="container">
+                <div class="row">
+                    <div class="summary col-lg-6 col-12 hidden">
+                        <div class="summary-heading">
+                            <div class="summary-heading-title">
+                                <h4>Thông tin đơn hàng</h4>
+                            </div>
+                            <div class="summary-heading-price">
+                                <h4>
+                                    @string.Format("{0:0,0 đ}", totalPrice) <i class="fas fa-chevron-down"
+                                                                               style="margin-left: 20px;margin-right: 5px;"></i>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="summary-content hidden">
+                            <div class="sliderbar">
+                                <div class="sliderbar-content">
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class="row row-sliderbar">
+                                            <div class="col-6">
+                                                <img src="~/image/product/@item.ImgeMain" alt="" width="80%">
+                                                <span class="notice">@item.Quantity</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <h5><a href="/Product/Detail/@item.ProductId">@item.Name</a></h5>
+                                                <span>@string.Format("{0:0,0 đ}", item.Price)</span>
+                                            </div>
+
+                                        </div>
+                                    }
+                                </div>
+                                <div class="slider-footer">
+                                    <div class="subtotal">
+                                        <div class="row row-sliderbar-footer">
+                                            <div class="col-6"><span>Tạm tính:</span></div>
+                                            <div class="col-6 text-right"><span>@string.Format("{0:0,0 đ}", @totalPriceOrder)</span></div>
+                                        </div>
+                                        <div class="row row-sliderbar-footer">
+                                            <div class="col-6"><span>Phí vận chuyển</span></div>
+                                            <div class="col-6 text-right"><span>@string.Format("{0:0,0 đ}", @priceShip)</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="total">
+                                        <div class="row row-sliderbar-footer">
+                                            <div class="col-6"><span>Tổng cộng:</span></div>
+                                            <div class="col-6 text-right"><span>@string.Format("{0:0,0 đ}", @totalPrice)</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="main">
+                            <div class="main-header">
+                                <a href="">
+                                    <h1>P&T SHOP</h1>
+                                </a>
+                            </div>
+                            <div class="main-content">
+                                <div class="main-title">
+                                    <h2>Thông tin giao hàng</h2>
+                                </div>
+                                <div class="main-customer-info">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="main-customer-info-img">
+                                            <img src="~/image/product/noavatar.png" alt="" width="60px"
+                                                 height="60px">
+                                        </div>
+                                        <div class="main-customer-info-logged">
+                                            <p class="main-customer-info-logged-paragraph">
+                                                Quốc Trung
+                                                (nguyenquoctrung@gmail.com)
+                                            </p>
+                                            <a href="">Đăng xuất</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="main-customer-info-logged">
+                                            <a href="">Đăng nhập</a>
+                                        </div>
+                                    }
+
+                                </div>
+
+                                <div class="fieldset">
+
+                                    <div class="fieldset-name form-group">
+                                        <label for="hoten" class="form-label" for="">Họ tên</label>
+                                        <input id="hoten" type="text" class="form-control">
+                                        <span class="form-message"></span>
+                                    </div>
+                                    <div class="fieldset-phone form-group">
+                                        <label for="sdt" class="form-label" for="">Số điện thoại</label>
+                                        <input id="sdt" type="text" class="form-control">
+                                        <span class="form-message"></span>
+                                    </div>
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="fieldset-address form-group">
+                                            <label for="diachi" class="form-label" for="">Email</label>
+                                            <input id="diachi" type="text" class="form-control">
+                                            <span class="form-message"></span>
+                                        </div>
+                                    }
+                                    <div class="fieldset-address form-group">
+                                        <label for="Diachi.Tp" class="form-label">Tỉnh</label>
+                                        <select for="Diachi.Tp" class="form-control" id="province">
+                                        </select>
+                                        <span validation-for="Diachi.Tp" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="fieldset-address form-group">
+                                        <label for="Diachi.Quan" class="form-label">Quận</label>
+                                        <select for="Diachi.Quan" class="form-control" id="district"></select>
+                                        <span validation-for="Diachi.Quan" class="text-danger"></span>
+                                    </div>
+                                    <div class="fieldset-address form-group">
+                                        <label for="Diachi.Phuong" class="form-label">Phường</label>
+                                        <select for="Diachi.Phuong" class="form-control" id="ward">
+                                        </select>
+                                        <span validation-for="Diachi.Phuong" class="text-danger"></span>
+                                    </div>
+                                    <div class="fieldset-address form-group">
+                                        <label for="diachi" class="form-label" for="">Địa chỉ</label>
+                                        <input id="diachi" type="text" class="form-control">
+                                        <span class="form-message"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main-footer">
+                                <div class="continue">
+                                    <a>
+                                        <i class="fi-rs-angle-left"></i>
+                                        Giỏ hàng
+                                    </a>
+                                </div>
+                                <div class="pay">
+                                    <form asp-action="CheckOut" asp-controller="Pay">
+                                        <input name="MethodPayment" value="COD" type="submit" class="btn-pay form-submit" />
+                                        <div id="paypal-button-container" style="max-width:1000px;"></div>
+                                        <input name="MethodPayment" value="VnPay" type="submit" class="btn-pay form-submit" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12 hidden-sm hidden-xs" style="background-color:#f3f3f3;">
+                        <div class="sliderbar">
+                            <div class="sliderbar-header">
+                                <h2>Thông tin đơn hàng</h2>
+                            </div>
+                            <div class="sliderbar-content">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="row row-sliderbar">
+                                        <div class="col-4">
+                                            <img src="~/image/product/@item.ImgeMain" alt="" width="80%">
+                                            <span class="notice">@item.Quantity</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5><a href="/Product/Detail/@item.ProductId">@item.Name</a></h5>
+                                            <h5>@string.Format("{0:0,0 đ}", item.Price)</h5>
+                                        </div>
+                                        <div class="col-2">
+                                            <span>@string.Format("{0:0,0 đ}", item.TotalPrice)</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="slider-footer">
+                                <div class="subtotal">
+                                    <div class="row row-sliderbar-footer">
+                                        <div class="col-6"><span>Tạm tính:</span></div>
+                                        <div class="col-6 text-right"><span>@string.Format("{0:0,0 đ}", totalPriceOrder)</span></div>
+                                    </div>
+                                    <div class="row row-sliderbar-footer">
+                                        <div class="col-6"><span>Phí vận chuyển</span></div>
+                                        <div class="col-6 text-right">
+                                            <span>@string.Format("{0:0,0 đ}", priceShip)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="total">
+                                    <div class="row row-sliderbar-footer">
+                                        <div class="col-6"><span>Tổng cộng:</span></div>
+                                        <div class="col-6 text-right"><span>@string.Format("{0:0,0 đ}", totalPrice)</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=@ViewBag.PaypalClientdId"></script>
+<script src="~/js/validator.js"></script>
+<script src="~/js/main.js"></script>
+<script src="~/js/ApiAdress.js"></script>
+
+<script>
+    paypal.Buttons({
+        style: {
+            layout: 'vertical',
+            color: 'silver',
+            tagline: 'false'
+        },
+        createOrder: (data, actions) => {
+            return fetch("/Pay/create-paypal-order", {
+                method: "post",
+            }).then((response) => {
+                if (!response.ok) {
+                    return response.json().then(error => { throw error; });
+                }
+
+                return response.json();
+            }).then((order) => order.id)
+                .catch(error => alert(error.message));
+        },
+        onApprove: (data, actions) => {
+            return fetch(`/Pay/capture-paypal-order?orderId=${data.orderID}`, {
+                method: "post",
+            }).then((response) => {
+                if (!response.ok) {
+                    return response.json().then(error => { throw error; });
+                }
+
+                //Đổi địa chỉ tới action thông báo thành công
+                window.location.href = "/Pay/PaymentSuccess";
+            }).catch(error => alert(error.message));
+        }
+    }).render('#paypal-button-container');
+
+
+    Validator({
+        form: '#form-2',
+        formGroupSelector: '.form-group',
+        errorSelector: '.form-message',
+        rules: [
+            Validator.isRequired('#hoten', 'Vui lòng nhập tên đầy đủ'),
+            Validator.isRequired('#sdt'),
+            Validator.isRequired('#diachi'),
+            Validator.isEmail('#email'),
+            Validator.isRequired('#password'),
+            Validator.minLength('#password', 6),
+            Validator.isRequired('#password_confirmation'),
+            // Validator.isRequired('input[name="gender"]'),
+            // Validator.isConfirmed('#password_confirmation', function(){
+            //   return document.querySelector('#form-1 #password').value;
+            // }, 'Mật khẩu nhập lại không chính xác')
+        ],
+        onSubmit: function (data) {
+            // call api
+            console.log(data);
+        }
+    });
+</script>

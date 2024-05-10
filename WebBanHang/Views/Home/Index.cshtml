@@ -1,0 +1,341 @@
+﻿@model List<Product>
+@{
+    ViewBag.Title = "Home";
+}
+<div class="container">
+    <!-- slide show -->
+    <div class="row">
+        @{
+            ViewBag.Slides = ViewBag.Slides;
+            ViewBag.Cout = ViewBag.Cout;
+            Html.RenderPartial("Slides");
+        }
+    </div>
+    <!-- end slide show -->
+    <div class="product">
+        <div class="container">
+            <div class="product_popular">
+                <h3 class="product__popular title-product">Sản phẩm nổi bật</h3>
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        if (item.IsHot == true)
+                        {
+                            <div class="col-lg-6 col-sm-12 mb-20">
+                                <div class="card" style="width: 100%;">
+                                    <img class="card-img-top" src="~/image/product/@item.ImgeMain" alt="Card image" style="width:100%">
+                                    <div class="card-body">
+                                        <h4 class="card-title">@item.Name</h4>
+                                        <p class="card-text custom__name-product" style="font-weight: 400;">
+                                        </p>
+                                        <a href="/product/detail/@item.ProductId" title="@item.Name" class="btn btn-buynow">
+                                            Xem ngay <i class="fas fa-arrow-right"
+                                                        style="font-size: 16px;margin-left: 5px;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="product__new">
+                <h3 class="product__ne title-product">Sản phẩm đặt sắc</h3>
+                <div class="row row-product" id="products">
+                    @foreach (var item in Model)
+                    {
+
+                        if (item.Featured)
+                        {
+                            @await Html.PartialAsync("ProductPartialView", item)
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="shoesnews">
+            <div class="container">
+                <h3 class="shoesnews__title">Tin tức</h3>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 mb-20">
+                        <a href="~/newDetail.html" class="product__new-item">
+                            <div class="card" style="width: 100%">
+                                <img class="card-img-top" src="~/image/product/new2.jpg" alt="Card image cap" height="230px">
+                                <div class="card-body">
+                                    <h5 class="card-title custom__name-product title-news">
+                                        Tin tức về giày puma
+                                    </h5>
+                                    <p class="card-text custom__name-product" style="font-weight: 400;">
+                                        Trong phạm vi bài viết ngày hôm nay, hãy cùng Thanh Hùng Futsal khám phá mẫu giày
+                                        đá bóng độc nhất vô nhị được nhà Swoosh thửa riêng cho cậu bé vàng của xứ sở Lục Lăng nhé!
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 mb-20">
+                        <a href="~/newDetail.html" class="product__new-item">
+                            <div class="card" style="width: 100%">
+                                <img class="card-img-top" src="~/image/product/new1.jpg" alt="Card image cap" height="230px">
+                                <div class="card-body">
+                                    <h5 class="card-title custom__name-product title-news">
+                                        Người sáng lập đế chế puma
+                                    </h5>
+                                    <p class="card-text custom__name-product" style="font-weight: 400;">
+                                        "PUMA ra mắt KING TOP DASSLER phiên bản giới hạn
+                                        20/11/2021
+                                        Nhằm tôn vinh những di sản mà Rudolph Dassler, người sáng lập Puma để lại, mới đây hãng thể thao nước Đức đã cho ra đời phiên bản Puma King Top Dassler
+                                        với chỉ giới hạn 100 đôi trên toàn thế giới.
+                                        Đôi giày đá banh được thiết kế theo phong cách đơn giản, đúng với tinh thần của dòng sản phẩm Puma King
+                                        . Upper là chất liệu da Kangaroo cao cấp với tone màu trắng chủ đạo lấy ý tưởng từ những bộ
+                                        quần áo sạch sẽ mà cậu bé Dassler đã giặt thuê từ khi còn nhỏ,
+                                        thông qua đó cũng xây dựng lên tinh thần kinh doanh và ý chí khởi nghiệp từ sớm của cậu.
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 mb-20">
+                        <a href="~/newDetail.html" class="product__new-item">
+                            <div class="card" style="width: 100%">
+                                <img class="card-img-top" src="~/image/new3.jpg" alt="Card image cap" height="230px">
+                                <div class="card-body">
+                                    <h5 class="card-title custom__name-product title-news">
+                                        Thông tin bên lề Uero
+                                    </h5>
+                                    <p class="card-text custom__name-product" style="font-weight: 400;">
+                                        "Bóng đá đã trở lại", câu nói tưởng chừng bình thường nhưng lại vô cùng ý nghĩa trong thời điểm hiện tại, khi mà chúng ta đang phải sống chung với đại dịch Covid-19.
+                                        Các sân vận động chật kín cổ động viên với các tràng vỗ tay,
+                                        tiếng cổ vũ cũng là một hình ảnh đánh dấu chiến thắng của nhân loại trước Covid-19.
+                                        Bên cạnh các trận đấu bóng đá đỉnh cao đang diễn ra khắp các sân cỏ trên toàn thế giới,
+                                        thì các ông lớn như Nike, adidas hay Puma, v.v...
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="shoesnews__all">
+                    <a href="~/Product.html" class="shoesnews__all-tittle">Xem tất cả</a> <i class="fi-rs-angle-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-2 main-img-2">
+                            <img src="~/image/product/ALID0007-01-01.png" alt="" class="img-main" xoriginal="=~/image/product/ALID0007-01-01.png" id="modal-img-detail-product">
+                        </div>
+                        <ul class="all-img-2" id="imageList">
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <div class="info-product">
+                            <h3 class="product-name" id="modal-name-detail-product">
+                                123
+                            </h3>
+                            <div class="status-product">
+                                Trạng thái: <b>Còn hàng</b>
+                            </div>
+                            <div class="status-product">
+                            </div>
+                            <div class="infor-oder">
+                                Loại sản phẩm: <b id="modal-productype-detail-product"></b>
+                            </div>
+                            <div class="price-product">
+                                <div class="special-price">
+                                    <div class="special-price">
+                                        <p class="card-text price-color product__price-new" id="modal-price-new-detail-product"></p>
+                                    </div>
+                                    <div class="price-old">
+                                        Giá gốc:
+                                        <del id="modal-price-old-detail-product">650.000đ</del>
+                                        <span class="discount" id="modal-price-discount-detail-product">(-20%)</span>
+                                    </div>
+                                </div>
+                                <div class="product-description">
+                                    Đầu tháng /2021, Nike chính thức trình
+                                    làng thế hệ tiếp theo của dòng giày đá bóng huyền thoại
+                                    thuộc nhà Swoosh là Tiempo Legend 9. Được mệnh danh là
+                                    thế hệ nhẹ nhất từ trước đến nay của dòng giày đá bóng Tiempo,
+                                    Legend 9 đã có những thay đổi đáng kể
+                                    về mặt thiết kế lẫn công nghệ nhằm giúp người chơi có thể tự
+                                    tin và phát huy tối đa khả năng khi chơi bóng.
+                                </div>
+                            </div>
+                            <div class="product__color d-flex" style="align-items: center;">
+                                <div class="title" style="font-size: 16px; margin-right: 10px;">
+                                    Màu:
+                                </div>
+                                <div class="select-swap d-flex">
+
+                                    <div class="circlecheck">
+                                        <input type="radio" id="f-option" class="circle-1" name="selector" checked>
+                                        <label for="f-option"></label>
+                                        <div class="outer-circle"></div>
+                                    </div>
+                                    <div class="circlecheck">
+                                        <input type="radio" id="g-option" class="circle-2" name="selector">
+                                        <label for="g-option"></label>
+                                        <div class="outer-circle"></div>
+                                    </div>
+                                    <div class="circlecheck">
+                                        <input type="radio" id="h-option" class="circle-3" name="selector">
+                                        <label for="h-option"></label>
+                                        <div class="outer-circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product__size d-flex" style="align-items: center;">
+                                <div class="title" style="font-size: 16px; margin-right: 10px;">
+                                    Kích thước:
+                                </div>
+                                <div class="select-swap">
+                                    <div class="swatch-element" data-value="38">
+                                        <input type="radio" class="variant-1" id="swatch-1-38" name="mau" value="trung" onclick="check()">
+                                        <label for="swatch-1-38" class="sd"><span>38</span></label>
+                                    </div>
+                                    <div class="swatch-element" data-value="39">
+                                        <input type="radio" class="variant-1" id="swatch-1-39" name="mau" value="thanh" onclick="check()">
+                                        <label for="swatch-1-39" class="sd"><span>39</span></label>
+                                    </div>
+                                    <div class="swatch-element" data-value="40">
+                                        <input type="radio" class="variant-1" id="swatch-1-40" name="mau" value="hieu" onclick="check()">
+                                        <label for="swatch-1-40" class="sd"><span>40</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <form asp-action="Index" asp-controller="Pay">
+                                <input name="ID" type="text" value="1" class="text-input" id="idInputModel" hidden>
+                                <div class="product__wrap">
+                                    <div class="product__amount">
+                                        <label for="">Số lượng: </label>
+                                        <input type="button" value="-" class="control" onclick="tru(1)">
+                                        <input name="Quantity" type="text" value="1" class="text-input" id="text_so_luong-1" onkeypress='validate(event)'>
+                                        <input type="button" value="+" class="control" onclick="cong(1)">
+                                    </div>
+                                </div>
+                                <div class="product__shopnow">
+                                    <button class="shopnow2">Mua ngay</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-default btn-close" data-dismiss="modal">
+                <i class="fas fa-times-circle"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="alert-cart" class="alert" style="display:none">
+    <div class="alert__heading">
+        <h4>Thêm vào giỏ hàng</h4>
+    </div>
+    <div class="alert__body">
+        <img src="~/Image/product/AKID0045-01-01.png" alt="" class="alert__body-img">
+        <div>
+            <h5 class="alert__body-name"></h5>
+
+            <span class="alert__body-amount">Số lượng: 1</span>
+            <h6 class="alert__body-price">@string.Format("{0:0,0 đ}", 123)</h6>
+        </div>
+    </div>
+    <div class="alert__footer">
+        @Html.ActionLink("Xem giỏ hàng", "Index", new { controller = "Cart" }, htmlAttributes: new { @class = "click__cart", style = "border-radius: 4px" })
+    </div>
+    <button class="btn-default btn-close" data-dismiss="modal" onclick="closeAlert()">
+        <i class="fas fa-times-circle"></i>
+    </button>
+</div>
+@section script {
+    <script src="~/js/CartView.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <script src="~/js/modal.js"></script>
+}
+<script>
+    function modal(id, ProductTypeName, Price, Promotion) {
+        const apiUrl = `/api/ImageProducts/GetByID/${id}`;
+        fetchDataFromApi(apiUrl)
+            .then(data => {
+                // Sau khi lấy dữ liệu từ API thành công, gọi hàm addImagesToPage
+                addImagesToPage(data);
+            })
+            .catch(error => {
+                // Xử lý lỗi nếu có
+                console.error('Error:', error);
+            });
+        var image = document.getElementById("modal-img-detail-product");
+        var image_main = document.getElementById(`img-${id}`);
+        $('#modal-name-detail-product').text($(`#name-${id}`).text());
+        $('#idInputModel').val(id);
+
+        $('#modal-productype-detail-product').text(ProductTypeName);
+        if (Promotion > 0) {
+            $('#modal-price-old-detail-product').text(Price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+            $('#modal-price-discount-detail-product').text(Promotion + '%');
+            var priceNew = Price - (Price * (Promotion / 100));
+            console.log(priceNew);
+            $('#modal-price-new-detail-product').text(priceNew.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+        }
+        else {
+            $('#modal-price-new-detail-product').text(Price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+        }
+        image.src = image_main.src;
+    }
+    function changeImgModal(id) {
+        let imgPath = document.getElementById(id).getAttribute('src');
+        document.getElementById('modal-img-detail-product').setAttribute('src', imgPath);
+    }
+    function fetchDataFromApi(apiUrl) {
+        // Sử dụng Fetch API để gọi API và trả về một promise
+        return fetch(apiUrl)
+            .then(response => {
+                // Kiểm tra trạng thái của response (thường là 200 OK cho request thành công)
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                // Chuyển đổi response thành JSON và trả về promise khác
+                return response.json();
+            })
+            .then(data => {
+                // Xử lý dữ liệu JSON ở đây
+                return data;
+            })
+            .catch(error => {
+                // Xử lý lỗi nếu có
+                throw error;
+            });
+    }
+
+    // Sử dụng hàm fetchDataFromApi để gọi API
+
+    function addImagesToPage(imageData) {
+        console.log(imageData)
+        const imageList = document.getElementById("imageList");
+        while (imageList.firstChild) {
+            imageList.removeChild(imageList.firstChild);
+        }
+        // Lặp qua dữ liệu hình ảnh từ API
+        imageData.forEach((image, index) => {
+            const li = document.createElement("li");
+            li.className = "img-item-2";
+            console.log(image.Path);
+            const img = document.createElement("img");
+            img.src = `/image/product/${image.Path}`;
+            img.alt = "";
+            img.onclick = () => changeImgModal(`img${index + 1}`);
+            img.id = `img${index + 1}`;
+            li.appendChild(img);
+            imageList.appendChild(li);
+        });
+    }
+</script>
